@@ -1,0 +1,9 @@
+<h2>Book List</h2>
+
+<ul>
+    {% for book in books %}
+        <li>
+            Title: {{ book.title }} - Author: {{ book.author }} - <a href="{% url 'openbook' book.id %}">Open</a>
+        </li>
+    {% endfor %}
+</ul>

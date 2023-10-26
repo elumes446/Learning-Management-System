@@ -1,0 +1,8 @@
+<h2>Delete Exam</h2>
+
+<p>Are you sure you want to delete the exam: {{ exam.title }}?</p>
+
+<form method="post" action="{% url 'delete_exam' exam.id %}">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>

@@ -1,0 +1,50 @@
+<html>
+    <head></head>
+    <body>
+        <h2>Chat</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="receiver">Receiver:</label>
+    <select name="receiver" id="receiver">
+        {% for user in users %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="text">Message:</label>
+    <textarea name="text" id="text"></textarea>
+    <br>
+    <label for="reply_to">Reply to:</label>
+    <select name="reply_to" id="reply_to">
+        <option value="">None</option>
+        {% for message in messages %}
+            <option value="{{ message.id }}">{{ message.text }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <button type="submit">Send</button>
+</form>
+
+<h3>Chat History:</h3>
+<ul>
+    {% for message in messages %}
+        <li>
+            From: {{ message.sender.username }} 
+            {% if message.reply_to %}
+                (Reply to: {{ message.reply_to.sender.username }})
+            {% endif %}
+            - To: {{ message.receiver.username }} - Message: {{ message.text }}
+            <button onclick="reply({{ message.id }})">Reply</button>
+        </li>
+    {% endfor %}
+</ul>
+
+<script>
+    function reply(messageId) {
+        // Set the value of the "reply_to" field to the selected message ID
+        document.getElementById("reply_to").value = messageId;
+    }
+</script>
+    </body>
+</html>
